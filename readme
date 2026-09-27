@@ -1,0 +1,14 @@
+Запуск и проверка покрытия
+bash
+# все тесты с race-детектором
+go test -race ./...
+
+# покрытие в процентах по пакетам
+go test -cover ./...
+
+# подробный HTML-отчёт по пакету service
+go test -coverprofile=cover.out ./internal/service
+go tool cover -html=cover.out -o cover.html
+
+# функция покрытия по каждой функции
+go tool cover -func=cover.out
