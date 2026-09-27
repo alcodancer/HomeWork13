@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package entity;
+
+option go_package = "grpc-homework/proto;proto";
+
+// Сущность, которой мы управляем
+message Entity {
+  string id      = 1;
+  string name    = 2;
+  string content = 3;
+  int64  version = 4;
+}
+
+// Запросы
+message CreateEntityRequest {
+  string name    = 1;
+  string content = 2;
+}
+
+message GetEntityRequest {
+  string id = 1;
+}
+
+message UpdateEntityRequest {
+  string id      = 1;
+  string name    = 2;
+  string content = 3;
+}
+
+message DeleteEntityRequest {
+  string id = 1;
+}
+
+message ListEntitiesRequest {
+  int32 page     = 1;  // 1-based
+  int32 page_size = 2;
+}
+
+// Ответы
+message EntityResponse {
+  Entity entity = 1;
+}
+
+message ListEntitiesResponse {
+  repeated Entity entities = 1;
+  int32 total = 2;
+}
+
+message DeleteEntityResponse {
+  bool success = 1;
+}
+
+// Сервис
+service EntityService {
+  rpc CreateEntity (CreateEntityRequest) returns (EntityResponse);
+  rpc GetEntity    (GetEntityRequest)    returns (EntityResponse);
+  rpc UpdateEntity (UpdateEntityRequest) returns (EntityResponse);
+  rpc DeleteEntity (DeleteEntityRequest) returns (DeleteEntityResponse);
+  rpc ListEntities (ListEntitiesRequest) returns (ListEntitiesResponse);
+}
